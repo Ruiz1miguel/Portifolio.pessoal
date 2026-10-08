@@ -1,0 +1,919 @@
+/* =========================================
+   CONFIGURAÇÕES GERAIS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #0a0f1c;
+    color: #e5e7eb;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+header {
+    width: 90%;
+    max-width: 1200px;
+    margin: 25px auto;
+
+    padding: 20px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #111827;
+
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+nav {
+    display: flex;
+    gap: 8px;
+}
+
+nav a {
+    padding: 9px 16px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffffff;
+    background: #1e293b;
+}
+
+nav a:first-child {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 45px auto;
+}
+
+
+/* =========================================
+   SEÇÕES
+========================================= */
+
+section {
+    margin-bottom: 30px;
+
+    background: #111827;
+
+    border: 1px solid #1f2937;
+    border-radius: 18px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================
+   HERO / APRESENTAÇÃO
+========================================= */
+
+.hero {
+    min-height: 480px;
+
+    padding: 65px;
+
+    display: flex;
+    align-items: center;
+    gap: 70px;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(37, 99, 235, 0.18),
+            transparent 35%
+        ),
+        #111827;
+}
+
+.hero img {
+    width: 42%;
+    height: 350px;
+
+    object-fit: cover;
+
+    border-radius: 16px;
+
+    border: 1px solid #334155;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.hero div {
+    flex: 1;
+}
+
+.hero h2 {
+    font-size: 55px;
+    line-height: 1.05;
+
+    color: #ffffff;
+
+    margin-bottom: 20px;
+
+    letter-spacing: -2px;
+}
+
+.hero p {
+    max-width: 520px;
+
+    color: #94a3b8;
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   BOTÃO
+========================================= */
+
+.botao {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    padding: 12px 24px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.botao:hover {
+    background: #3b82f6;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+
+/* =========================================
+   TÍTULOS
+========================================= */
+
+section h2 {
+    color: #ffffff;
+
+    font-size: 30px;
+
+    margin-bottom: 18px;
+}
+
+section h3 {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   SOBRE MIM
+========================================= */
+
+.sobre {
+    padding: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 40px;
+}
+
+.sobre img {
+    width: 120px;
+    height: 120px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    border: 2px solid #2563eb;
+
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+}
+
+.sobre p {
+    max-width: 750px;
+
+    color: #94a3b8;
+
+    font-size: 16px;
+}
+
+
+/* =========================================
+   PROJETOS
+========================================= */
+
+.projetos {
+    padding: 45px;
+
+    text-align: center;
+}
+
+.lista-projetos {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 30px;
+}
+
+.projeto {
+    overflow: hidden;
+
+    background: #0a0f1c;
+
+    border: 1px solid #1f2937;
+
+    border-radius: 14px;
+
+    text-align: left;
+
+    transition: 0.3s;
+}
+
+.projeto:hover {
+    transform: translateY(-7px);
+
+    border-color: #2563eb;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+.projeto img {
+    width: 100%;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-bottom: 1px solid #1f2937;
+}
+
+.projeto h3 {
+    padding: 18px 18px 5px;
+
+    font-size: 18px;
+}
+
+.projeto p {
+    padding: 0 18px 20px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   CONTATO
+========================================= */
+
+.contato {
+    padding: 50px;
+
+    text-align: center;
+}
+
+.contato p {
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+form {
+    width: 100%;
+    max-width: 600px;
+
+    margin: 30px auto 0;
+
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+}
+
+form label {
+    margin-bottom: 7px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+form input,
+form textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    margin-bottom: 18px;
+
+    background: #0a0f1c;
+
+    color: #ffffff;
+
+    border: 1px solid #334155;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    transition: 0.25s;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+form textarea {
+    min-height: 140px;
+
+    resize: vertical;
+}
+
+form button {
+    padding: 12px 20px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+form button:hover {
+    background: #3b82f6;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+footer {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 40px auto 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    border-top: 1px solid #1f2937;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 850px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        padding: 40px;
+
+        text-align: center;
+    }
+
+    .hero img {
+        width: 100%;
+        height: 300px;
+    }
+
+    .hero h2 {
+        font-size: 42px;
+    }
+
+    .hero p {
+        margin: auto;
+    }
+
+    .sobre {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .lista-projetos {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 500px) {
+
+    header {
+        width: 94%;
+
+        padding: 16px;
+    }
+
+    nav a {
+        padding: 8px 10px;
+
+        font-size: 13px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .hero,
+    .sobre,
+    .projetos,
+    .contato {
+        padding: 28px 22px;
+    }
+
+    .hero h2 {
+        font-size: 36px;
+    }
+
+    .sobre img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+section {
+    margin-bottom: 30px;
+
+    background: #111827;
+
+    border: 1px solid #1f2937;
+    border-radius: 18px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+nav a.ativo {
+    color: #ffffff;
+    background: #2563eb;
+}
+
+/* =========================================
+   ANIMAÇÕES
+========================================= */
+
+/* Animação geral das páginas */
+main {
+    animation: entradaPagina 0.8s ease forwards;
+}
+
+@keyframes entradaPagina {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Animação do cabeçalho */
+header {
+    animation: entradaHeader 0.6s ease forwards;
+}
+
+@keyframes entradaHeader {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Animação da seção principal */
+.hero {
+    animation: entradaHero 1s ease forwards;
+}
+
+@keyframes entradaHero {
+    from {
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* Animação das outras seções */
+.sobre {
+    animation: entradaSobre 0.9s ease 0.2s both;
+}
+
+.projetos {
+    animation: entradaProjetos 0.9s ease 0.3s both;
+}
+
+.contato {
+    animation: entradaContato 0.9s ease 0.4s both;
+}
+
+@keyframes entradaSobre {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes entradaProjetos {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes entradaContato {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================
+   ANIMAÇÃO DOS CARDS
+========================================= */
+
+.projeto {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.projeto:hover {
+    transform: translateY(-8px) scale(1.01);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+
+    border-color: #2563eb;
+}
+
+
+/* =========================================
+   ANIMAÇÃO DA FOTO
+========================================= */
+
+.hero img {
+    transition: transform 0.5s ease;
+}
+
+.hero img:hover {
+    transform: scale(1.02);
+}
+
+
+/* =========================================
+   ANIMAÇÃO DOS BOTÕES
+========================================= */
+
+.botao {
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.botao:hover {
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   ANIMAÇÃO DO MENU
+========================================= */
+
+nav a {
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+nav a:hover {
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   PAINEL ADMIN (READ / EDITAR)
+========================================= */
+
+.painel {
+    width: 90%;
+    max-width: 1100px;
+    margin: 45px auto;
+}
+
+.painel h1 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.tabela-mensagens {
+    width: 100%;
+    border-collapse: collapse;
+
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+.tabela-mensagens th {
+    background: #1e293b;
+    color: #ffffff;
+
+    text-align: left;
+    padding: 14px 16px;
+
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tabela-mensagens td {
+    padding: 14px 16px;
+
+    border-top: 1px solid #1f2937;
+
+    color: #cbd5e1;
+    font-size: 14px;
+
+    vertical-align: top;
+}
+
+.tabela-mensagens tr:hover td {
+    background: #0f1729;
+}
+
+.tabela-mensagens .sem-registros {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+}
+
+/* Botões de ação */
+
+.acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    border: none;
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.btn-editar {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.btn-editar:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+}
+
+.btn-excluir {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.btn-excluir:hover {
+    background: #991b1b;
+    transform: translateY(-2px);
+}
+
+.btn-voltar {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+.btn-voltar:hover {
+    background: #334155;
+    color: #ffffff;
+}
+
+/* Formulário de edição */
+
+.form-editar {
+    max-width: 600px;
+
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+
+    padding: 35px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+.form-editar label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-editar input,
+.form-editar textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+    margin-bottom: 18px;
+
+    background: #0a0f1c;
+    color: #ffffff;
+
+    border: 1px solid #334155;
+    border-radius: 8px;
+
+    outline: none;
+    font-family: inherit;
+
+    transition: 0.25s;
+}
+
+.form-editar input:focus,
+.form-editar textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-editar textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-editar .acoes-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-salvar {
+    background: #2563eb;
+    color: #ffffff;
+    padding: 12px 22px;
+}
+
+.btn-salvar:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+}
