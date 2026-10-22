@@ -917,3 +917,69 @@ nav a:hover {
     background: #3b82f6;
     transform: translateY(-2px);
 }
+
+/* =========================================
+   INTEGRAÇÃO COM A API (lista + status)
+========================================= */
+
+.status {
+    min-height: 24px;
+    margin-top: 18px;
+    font-weight: 600;
+}
+
+.status.ok {
+    color: #22c55e !important;
+}
+
+.status.erro {
+    color: #f87171 !important;
+}
+
+.mensagens-enviadas {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto 60px;
+}
+
+.mensagens-enviadas h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+#lista-mensagens {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mensagem-card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-left: 4px solid #2563eb;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #e2e8f0;
+}
+
+.mensagem-card .mensagem-email {
+    margin-left: 10px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.mensagem-card p {
+    margin: 10px 0;
+    white-space: pre-wrap;
+}
+
+.mensagem-card small {
+    color: #64748b;
+}
+
+#lista-mensagens .sem-registros {
+    color: #94a3b8;
+    text-align: center;
+}

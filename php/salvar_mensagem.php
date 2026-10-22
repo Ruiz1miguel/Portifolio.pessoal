@@ -6,8 +6,21 @@ ini_set('display_errors', 1);
 require "conexao.php";
 
 $stmt = $conexao->prepare(
+
+"INSERT INTO mensagens (nome, email, texto)
+
+VALUES (?, ?, ?)"
+
+);
+
+$stmt->execute([$_POST["nome"], $_POST["email"], $_POST["texto"]]);
+
+
+require "conexao.php";
+
+$stmt = $conexao->prepare(
     "INSERT INTO mensagens (nome, email, texto)
-     VALUES (?, ?, ?)"
+    VALUES (?, ?, ?)"
 );
 
 $stmt->execute([$_POST["nome"], $_POST["email"], $_POST["texto"]]);
