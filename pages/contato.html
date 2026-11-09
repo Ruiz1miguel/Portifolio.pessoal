@@ -17,7 +17,6 @@
             <a href="sobre.html">Sobre</a>
             <a href="projetos.html">Projetos</a>
             <a href="contato.html" class="ativo" aria-current="page">Contato</a>
-            <a href="../php/read.php">Painel</a>
         </nav>
     </header>
 
@@ -33,38 +32,9 @@
         </p>
 
         <div class="contato-layout"><div class="contato-informacoes"><h3>Envie sua mensagem</h3><p>Quer comentar sobre um projeto ou fazer uma pergunta? Preencha o formulário ao lado.</p><p>Você também pode explorar meus trabalhos na página de projetos.</p><a class="botao botao-secundario" href="projetos.html">Ver projetos</a></div>
-        <form id="form-contato" method="POST" action="../php/create.php">
-            <input type="hidden" name="tabela" value="mensagens">
-            
-
-            <label for="nome">Nome: </label>
-            <input type="text" id="nome" name="nome" required>
-
-            <br><br>
-
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <br><br>
-
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="texto" required></textarea>
-
-            <br><br>
-
-            <button type="submit">Enviar</button>
-
-        </form></div>
+        <p class="intro-secao">O formulário de mensagens está disponível apenas na versão local com PHP e MySQL. Esta versão pública é somente para apresentação dos projetos.</p></div>
 
         <p id="status" class="status" role="status"></p>
-
-    </section>
-
-    <section class="mensagens-enviadas">
-
-        <h2 id="titulo-mensagens">Mensagens enviadas</h2>
-        <ul id="lista-mensagens"></ul>
-        <p class="vazio" id="status-mensagens">Carregando mensagens...</p>
 
     </section>
 
