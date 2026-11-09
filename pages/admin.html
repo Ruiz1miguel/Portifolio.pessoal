@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel administrativo - Portfólio</title><link rel="stylesheet" href="../css/style.css"></head>
+<body><header><h1><a href="../index.html">Meu Portfólio</a></h1><nav><a href="../index.html">Início</a><a href="projetos.html">Projetos</a></nav></header>
+<main class="painel"><p class="sobretitulo">ÁREA ADMINISTRATIVA</p><h1>Gerenciar portfólio</h1>
+<section class="secao-nova" id="login-area"><h2>Entrar</h2><p class="intro-secao">Apenas a conta autorizada pode alterar projetos ou visualizar mensagens.</p>
+<form id="form-login"><label for="admin-email">E-mail</label><input id="admin-email" type="email" required autocomplete="username">
+<label for="admin-senha">Senha</label><input id="admin-senha" type="password" required autocomplete="current-password"><button type="submit">Entrar</button></form></section>
+<div id="admin-area" hidden><button id="sair" class="btn btn-voltar" type="button">Sair</button>
+<section class="secao-nova"><h2>Projetos cadastrados</h2><div id="lista-admin-projetos"></div></section>
+<section class="secao-nova"><h2 id="titulo-form">Cadastrar projeto</h2>
+<form id="form-projeto"><input type="hidden" id="projeto-id"><label for="titulo">Título</label><input id="titulo" maxlength="160" required>
+<label for="descricao">Descrição</label><textarea id="descricao" required></textarea>
+<label for="tecnologias">Tecnologias</label><input id="tecnologias" required>
+<label for="link-git">Link GitHub (opcional)</label><input id="link-git" type="url" placeholder="https://github.com/...">
+<div class="acoes-form"><button type="submit">Salvar projeto</button><button type="button" class="btn btn-voltar" id="cancelar">Cancelar edição</button></div></form></section>
+<section class="secao-nova"><h2>Mensagens recebidas</h2><div id="lista-admin-mensagens"></div></section></div>
+<p id="admin-status" class="status" role="status"></p></main>
+<script src="../js/config.js"></script><script src="../js/api.js"></script><script src="../js/admin.js"></script></body></html>
