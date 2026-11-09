@@ -1,93 +1,29 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Portfólio</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+**IMPORTANTE: Seu Supabase ja foi configurado. Leia LEIA_PRIMEIRO.txt e NAO execute supabase.sql novamente.**
 
-<body>
+# Portfólio GitHub Pages + Supabase
 
-    <header>
-        <div>
-            <h1><a href="index.html">Miguel Guimarães Ruiz Santos</a></h1>
-        </div>
+## 1. Criar banco e conta administrativa
+1. Crie um projeto em https://supabase.com/.
+2. Abra **SQL Editor** e execute `supabase.sql` (não execute a linha de exemplo do INSERT com texto placeholder).
+3. Em **Authentication > Users**, crie manualmente um usuário administrador com e-mail e senha. Copie o **User UID** (UUID).
+4. No SQL Editor execute: `insert into public.admins (user_id) values ('SEU-UUID-AQUI');` substituindo pelo UID real.
+5. No arquivo `js/config.js`, preencha **Project URL** e **publishable key** (ou `anon` legacy key) encontradas nas configurações de API. **NUNCA** use `service_role`, secret key, senha ou token privado nesse arquivo.
+6. No Supabase, revise as permissões de autenticação e configure URLs do site conforme necessário.
 
-        <nav>
-            <a href="index.html" class="ativo" aria-current="page">Início</a>
-            <a href="pages/sobre.html">Sobre</a>
-            <a href="pages/projetos.html">Projetos</a>
-            <a href="pages/contato.html">Contato</a>
-        </nav>
-    </header>
+## 2. Publicar no GitHub Pages
+Envie `index.html`, `pages/`, `css/`, `js/`, `img/` para a raiz de um repositório. Em Settings > Pages, selecione Deploy from a branch > main > /(root).
 
-    <main>
+## 3. Usar o site
+- `index.html` e `pages/projetos.html` exibem projetos diretamente do Supabase.
+- `pages/detalhes.html?id=1` exibe o projeto de ID 1.
+- `pages/contato.html` permite enviar mensagens ao banco.
+- `pages/admin.html` é o painel de login e CRUD de projetos; também lista e exclui mensagens.
+- A senha do administrador **não** é publicada no GitHub. O banco usa RLS para autorizar alterações.
 
-        <section class="hero hero-novo">
-            <div class="hero-texto">
-                <p class="sobretitulo">PORTFÓLIO • DESENVOLVIMENTO WEB</p>
-                <h1>Olá, eu sou <span class="destaque">Miguel.</span></h1>
-                <h2 id="saudacao">Bem-vindo ao meu portfólio.</h2>
-                <p>Sou estudante de Técnico em Informática. Aqui compartilho minha evolução, meus conhecimentos e projetos desenvolvidos durante o curso.</p>
-                <div class="botoes-hero">
-                    <a class="botao" href="pages/projetos.html">Explorar projetos</a>
-                    <a class="botao botao-secundario" href="pages/contato.html">Entrar em contato</a>
-                </div>
-                <div class="hero-detalhes"><span>HTML & CSS</span><span>JavaScript</span><span>PHP & MySQL</span></div>
-            </div>
-            <img src="img/perfil.jpg" alt="Foto de Miguel" class="foto-hero">
-        </section>
-        <section class="secao-nova">
-            <p class="sobretitulo">O QUE ESTOU APRENDENDO</p>
-            <h2>Habilidades técnicas</h2>
-            <p class="intro-secao">Tecnologias que utilizo nos exercícios e projetos do curso.</p>
-            <div class="grade-habilidades">
-                <article class="habilidade"><span class="habilidade-icone">&lt;/&gt;</span><h3>HTML</h3><p>Estrutura e organização das páginas.</p></article>
-                <article class="habilidade"><span class="habilidade-icone">#</span><h3>CSS</h3><p>Estilos, Flexbox e responsividade.</p></article>
-                <article class="habilidade"><span class="habilidade-icone">JS</span><h3>JavaScript</h3><p>Eventos, funções e interação com o DOM.</p></article>
-                <article class="habilidade"><span class="habilidade-icone">PHP</span><h3>PHP</h3><p>Formulários e operações de cadastro.</p></article>
-                <article class="habilidade"><span class="habilidade-icone">SQL</span><h3>MySQL</h3><p>Armazenamento e consulta de dados.</p></article>
-            </div>
-            <a class="link-destaque" href="pages/sobre.html">Conheça minha trajetória →</a>
-        </section>
-        <section class="projetos">
-            <p class="sobretitulo">TRABALHOS EM DESTAQUE</p>
-            <h2>Projetos recentes</h2>
-            <p class="intro-secao">Projetos cadastrados no banco de dados do portfólio.</p>
-
-            <div class="lista-projetos" id="projetos-destaque">
-            <p class="vazio" id="status-projetos">Carregando projetos...</p>
-            </div>
-            <a class="botao" href="pages/projetos.html">Ver todos os projetos</a>
-        </section>
-
-        <section class="secao-nova faq">
-            <p class="sobretitulo">DÚVIDAS FREQUENTES</p>
-            <h2>Perguntas sobre meu trabalho</h2>
-            <div class="perguntas">
-                <article class="pergunta"><button type="button" class="pergunta-botao">Quais tecnologias estou estudando? <span>+</span></button><p class="resposta">HTML, CSS, JavaScript, PHP e MySQL, com atividades práticas durante o curso técnico.</p></article>
-                <article class="pergunta"><button type="button" class="pergunta-botao">Onde posso ver meus projetos? <span>+</span></button><p class="resposta">Na página Projetos, que apresenta os trabalhos cadastrados no banco de dados.</p></article>
-                <article class="pergunta"><button type="button" class="pergunta-botao">Como posso entrar em contato? <span>+</span></button><p class="resposta">Use o formulário da página Contato para enviar sua mensagem.</p></article>
-            </div>
-        </section>
-        <section class="contato chamada-contato">
-            <h2>Entre em Contato</h2>
-
-            <p>Entre em contato comigo através dos canais abaixo.</p>
-
-            <a class="botao" href="pages/contato.html">Falar comigo</a>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Miguel Guimarães Ruiz Santos. Todos os direitos reservados.</p>
-    </footer>
-
-<script src="js/config.js"></script>
-<script src="js/supabase-api.js"></script>
-<script src="js/script.js"></script>
-
-</body>
-</html>
+## Atenção
+- Sem URL, chave pública, usuário admin e SQL configurados, o CRUD ainda não funcionará.
+- A chave pública no frontend é normal; a proteção vem das políticas RLS, que não devem ser desativadas.
+- Inserção pública de mensagens pode receber spam. Para uso público intenso, implemente proteção anti-spam/CAPTCHA e limites de taxa em um backend/Edge Function.
+- Os dados reais do MySQL **não** foram importados. Você deve cadastrá-los no painel ou migrá-los.
+- A versão PHP/MySQL original deve ser preservada separadamente caso o professor exija essa tecnologia.
+- Esta versão implementa CRUD completo de **projetos** e criação/leitura/exclusão de **mensagens**. Mensagens não são editáveis pelo painel.
