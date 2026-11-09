@@ -1254,3 +1254,17 @@ section { border-color: var(--borda); }
 #galeria-projetos .acoes-projeto .botao { margin:0; width:auto; align-self:auto; }
 .mensagens-enviadas { padding:30px; }
 @media(max-width:600px) { #galeria-projetos .projeto { padding:20px; } #galeria-projetos .acoes-projeto { flex-direction:column; align-items:stretch; } #galeria-projetos .acoes-projeto .botao { width:100%; text-align:center; } }
+
+/* GitHub Pages + Supabase: painel e galeria */
+[hidden] { display: none !important; }
+.admin-registro { background: #14223a; border: 1px solid #2a4163; border-radius: 12px; padding: 20px; margin: 12px 0; overflow-wrap: anywhere; }
+.admin-registro p { margin: 10px 0; color: #a7b8d1; white-space: pre-wrap; }
+.admin-registro small { display: block; margin: 12px 0; color: #94a3b8; }
+.admin-registro .acoes { margin-top: 14px; }
+#galeria-projetos { flex-direction: column; align-items: stretch; max-width: 850px; }
+#galeria-projetos .projeto { flex: 0 1 auto; width: 100%; max-width: none; }
+#galeria-projetos .acoes-projeto { flex-direction: row; align-items: center; gap: 12px; }
+#galeria-projetos .acoes-projeto .botao { width: auto; margin: 0; }
+#admin-area section { margin-top: 24px; }
+#form-projeto .acoes-form { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 600px) { #galeria-projetos .acoes-projeto { flex-direction: column; align-items: stretch; } #galeria-projetos .acoes-projeto .botao { width: 100%; text-align: center; } }

@@ -1,18 +1,93 @@
-# Portfólio para GitHub Pages
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-Versão estática do portfólio: HTML, CSS, JavaScript e JSON.
+<body>
 
-## Publicação
-1. Envie **o conteúdo desta pasta** para a raiz de um repositório GitHub.
-2. Acesse Settings > Pages > Build and deployment.
-3. Escolha Deploy from a branch, branch `main`, pasta `/ (root)` e Save.
-4. Aguarde a publicação e abra o endereço exibido pelo GitHub.
+    <header>
+        <div>
+            <h1><a href="index.html">Miguel Guimarães Ruiz Santos</a></h1>
+        </div>
 
-## Editar projetos
-Abra `data/projetos.json` e altere os registros, mantendo JSON válido. Cada projeto usa `id`, `titulo`, `descricao`, `tecnologias` e `link_git`. Para mostrar o botão do GitHub, coloque a URL real em `link_git`; vazio esconde o botão.
+        <nav>
+            <a href="index.html" class="ativo" aria-current="page">Início</a>
+            <a href="pages/sobre.html">Sobre</a>
+            <a href="pages/projetos.html">Projetos</a>
+            <a href="pages/contato.html">Contato</a>
+        </nav>
+    </header>
 
-**Importante:** não foi possível recuperar os registros reais do seu MySQL. Incluí um exemplo `Carta_AnaJulia` com dados visíveis na captura, descrição provisória e sem link inventado. Substitua ou acrescente seus registros reais.
+    <main>
 
-A versão GitHub Pages não executa PHP, MySQL, CRUD ou envio de mensagens. O formulário foi substituído por aviso. Guarde o ZIP original para rodar o backend no XAMPP.
+        <section class="hero hero-novo">
+            <div class="hero-texto">
+                <p class="sobretitulo">PORTFÓLIO • DESENVOLVIMENTO WEB</p>
+                <h1>Olá, eu sou <span class="destaque">Miguel.</span></h1>
+                <h2 id="saudacao">Bem-vindo ao meu portfólio.</h2>
+                <p>Sou estudante de Técnico em Informática. Aqui compartilho minha evolução, meus conhecimentos e projetos desenvolvidos durante o curso.</p>
+                <div class="botoes-hero">
+                    <a class="botao" href="pages/projetos.html">Explorar projetos</a>
+                    <a class="botao botao-secundario" href="pages/contato.html">Entrar em contato</a>
+                </div>
+                <div class="hero-detalhes"><span>HTML & CSS</span><span>JavaScript</span><span>PHP & MySQL</span></div>
+            </div>
+            <img src="img/perfil.jpg" alt="Foto de Miguel" class="foto-hero">
+        </section>
+        <section class="secao-nova">
+            <p class="sobretitulo">O QUE ESTOU APRENDENDO</p>
+            <h2>Habilidades técnicas</h2>
+            <p class="intro-secao">Tecnologias que utilizo nos exercícios e projetos do curso.</p>
+            <div class="grade-habilidades">
+                <article class="habilidade"><span class="habilidade-icone">&lt;/&gt;</span><h3>HTML</h3><p>Estrutura e organização das páginas.</p></article>
+                <article class="habilidade"><span class="habilidade-icone">#</span><h3>CSS</h3><p>Estilos, Flexbox e responsividade.</p></article>
+                <article class="habilidade"><span class="habilidade-icone">JS</span><h3>JavaScript</h3><p>Eventos, funções e interação com o DOM.</p></article>
+                <article class="habilidade"><span class="habilidade-icone">PHP</span><h3>PHP</h3><p>Formulários e operações de cadastro.</p></article>
+                <article class="habilidade"><span class="habilidade-icone">SQL</span><h3>MySQL</h3><p>Armazenamento e consulta de dados.</p></article>
+            </div>
+            <a class="link-destaque" href="pages/sobre.html">Conheça minha trajetória →</a>
+        </section>
+        <section class="projetos">
+            <p class="sobretitulo">TRABALHOS EM DESTAQUE</p>
+            <h2>Projetos recentes</h2>
+            <p class="intro-secao">Projetos cadastrados no banco de dados do portfólio.</p>
 
-Para testar `fetch()` localmente, use um servidor HTTP (por exemplo, VS Code Live Server), e não abra `index.html` diretamente com `file://`.
+            <div class="lista-projetos" id="projetos-destaque">
+            <p class="vazio" id="status-projetos">Carregando projetos...</p>
+            </div>
+            <a class="botao" href="pages/projetos.html">Ver todos os projetos</a>
+        </section>
+
+        <section class="secao-nova faq">
+            <p class="sobretitulo">DÚVIDAS FREQUENTES</p>
+            <h2>Perguntas sobre meu trabalho</h2>
+            <div class="perguntas">
+                <article class="pergunta"><button type="button" class="pergunta-botao">Quais tecnologias estou estudando? <span>+</span></button><p class="resposta">HTML, CSS, JavaScript, PHP e MySQL, com atividades práticas durante o curso técnico.</p></article>
+                <article class="pergunta"><button type="button" class="pergunta-botao">Onde posso ver meus projetos? <span>+</span></button><p class="resposta">Na página Projetos, que apresenta os trabalhos cadastrados no banco de dados.</p></article>
+                <article class="pergunta"><button type="button" class="pergunta-botao">Como posso entrar em contato? <span>+</span></button><p class="resposta">Use o formulário da página Contato para enviar sua mensagem.</p></article>
+            </div>
+        </section>
+        <section class="contato chamada-contato">
+            <h2>Entre em Contato</h2>
+
+            <p>Entre em contato comigo através dos canais abaixo.</p>
+
+            <a class="botao" href="pages/contato.html">Falar comigo</a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Miguel Guimarães Ruiz Santos. Todos os direitos reservados.</p>
+    </footer>
+
+<script src="js/config.js"></script>
+<script src="js/supabase-api.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
