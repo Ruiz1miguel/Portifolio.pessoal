@@ -1,240 +1,165 @@
-// ========================================
-// MENU
-// ========================================
-
-let linksMenu = document.querySelectorAll("nav a");
-
-linksMenu.forEach(link => {
-
-    link.addEventListener("click", function () {
-
-        linksMenu.forEach(item => {
-            item.classList.remove("ativo");
-        });
-
-        this.classList.add("ativo");
-
-    });
-
-});
-
-
-// ========================================
-// FORMULÁRIO DE CONTATO
-// ========================================
-
-let formulario = document.querySelector("form");
-
-if (formulario) {
-
-    formulario.addEventListener("submit", function(event) {
-
-        let nome = document.querySelector("#nome").value;
-
-        if (nome.trim() === "") {
-            event.preventDefault();
-            alert("Por favor, informe seu nome.");
-            return;
-        }
-
-    });
-
-}
-
-// ========================================
-// Saudar o visitante
-// ========================================
-
-const saudacao = document.querySelector('#saudacao');
-
+// Saudacao fixa: texto e DOM, sem API de datas nao confirmada nas apostilas.
+let saudacao = document.querySelector("#saudacao");
 if (saudacao) {
-
-    const hora = new Date().getHours();
-
-    if (hora < 12) {
-        saudacao.textContent = 'Bom dia! Seja bem-vindo(a).';
-    } else if (hora < 18) {
-        saudacao.textContent = 'Boa tarde! Seja bem-vindo(a).';
-    } else {
-        saudacao.textContent = 'Boa noite! Seja bem-vindo(a).';
-    }
-
+    saudacao.textContent = "Bem-vindo ao meu portfólio!";
 }
 
-
-// ========================================
-// INTEGRAÇÃO COM A API (GET + POST)
-// Este arquivo conversa com o php/mensagens.php usando fetch,
-// sem precisar recarregar a página.
-// ========================================
- 
-// Endereço da API. É relativo à página (pages/contato.html),
-// por isso sobe uma pasta (..) e entra em php/.
-const API_URL = "../php/mensagens.php";
- 
- 
-// ----------------------------------------
-// GET: busca as mensagens salvas no banco
-// ----------------------------------------
-// "async" permite usar "await" dentro da função:
-// o código espera a resposta do servidor antes de continuar.
-async function listarMensagens() {
-    // fetch sem opções faz uma requisição GET (é o padrão)
-    const resposta = await fetch(API_URL);
- 
-    // resposta.ok é false para status 400, 404, 500...
-    // Nesse caso lançamos um erro, que será pego pelo try/catch de quem chamou.
-    if (!resposta.ok) {
-        throw new Error("Não foi possível carregar as mensagens (status " + resposta.status + ").");
-    }
- 
-    // Converte o corpo da resposta (texto JSON) em array de objetos JavaScript
-    return await resposta.json();
-}
- 
- 
-// ----------------------------------------
-// POST: cadastra uma nova mensagem
-// ----------------------------------------
-// "dados" é um objeto, por exemplo { nome: "Ana", email: "a@b.com", texto: "Oi" }
-async function cadastrarMensagem(dados) {
-    const resposta = await fetch(API_URL, {
-        method: "POST", // muda o método de GET para POST
- 
-        // Avisa ao servidor que o corpo da requisição está em formato JSON
-        headers: { "Content-Type": "application/json" },
- 
-        // Objetos JS não viajam pela rede: JSON.stringify converte em texto JSON
-        body: JSON.stringify(dados),
-    });
- 
-    // Lê a resposta do servidor (a mensagem criada ou { erro: "..." })
-    const corpo = await resposta.json();
- 
-    // Se o servidor recusou (ex.: 400 por campo vazio), mostra o erro que ele enviou
-    if (!resposta.ok) {
-        throw new Error(corpo.erro || "Erro ao enviar a mensagem.");
-    }
- 
-    return corpo;
-}
- 
- 
-// ----------------------------------------
-// Feedback para o usuário
-// ----------------------------------------
-// tipo: "ok" (verde) ou "erro" (vermelho). As cores estão no style.css.
-function mostrarStatus(texto, tipo) {
-    const status = document.querySelector("#status");
-    status.textContent = texto;
-    status.className = "status " + tipo; // troca a classe CSS conforme o tipo
-}
- 
- 
-// ----------------------------------------
-// Desenha a lista de mensagens na tela
-// ----------------------------------------
-// Recebe o array vindo do GET e cria os elementos HTML dinamicamente.
-// Usa textContent (e não innerHTML) para que um texto como "<script>"
-// seja mostrado como texto e nunca executado.
-function renderizarMensagens(mensagens) {
-    const lista = document.querySelector("#lista-mensagens");
- 
-    // Limpa a lista antiga antes de desenhar a nova
-    lista.innerHTML = "";
- 
-    // Atualiza o contador no título "Mensagens enviadas (N)"
-    document.querySelector("#total").textContent = mensagens.length;
- 
-    // Caso não exista nenhuma mensagem, mostra um aviso e para por aqui
-    if (mensagens.length === 0) {
-        const vazio = document.createElement("li");
-        vazio.className = "sem-registros";
-        vazio.textContent = "Nenhuma mensagem enviada ainda.";
-        lista.appendChild(vazio);
-        return;
-    }
- 
-    // Para cada mensagem do banco, monta um "card"
-    mensagens.forEach(function (msg) {
-        const item = document.createElement("li");
-        item.className = "mensagem-card";
- 
-        const titulo = document.createElement("strong");
-        titulo.textContent = msg.nome;
- 
-        const email = document.createElement("span");
-        email.className = "mensagem-email";
-        email.textContent = msg.email;
- 
-        const texto = document.createElement("p");
-        texto.textContent = msg.texto;
- 
-        const data = document.createElement("small");
-        data.textContent = msg.data_envio;
- 
-        // Coloca todos os elementos dentro do <li> e o <li> dentro da <ul>
-        item.append(titulo, email, texto, data);
-        lista.appendChild(item);
+// Perguntas interativas: querySelectorAll, addEventListener e classList.toggle.
+let botoesPerguntas = document.querySelectorAll(".pergunta-botao");
+let respostas = document.querySelectorAll(".resposta");
+for (let i = 0; i < botoesPerguntas.length; i++) {
+    botoesPerguntas[i].addEventListener("click", function () {
+        respostas[i].classList.toggle("visivel");
     });
 }
- 
- 
-// ----------------------------------------
-// Busca as mensagens e mostra na tela
-// ----------------------------------------
-// try/catch: se o servidor estiver desligado ou o fetch falhar,
-// o erro é mostrado ao usuário em vez de quebrar a página.
-async function carregarMensagens() {
-    try {
-        renderizarMensagens(await listarMensagens());
-    } catch (erro) {
-        mostrarStatus("Erro: não consegui falar com o servidor. O Apache/MySQL estão ligados? (" + erro.message + ")", "erro");
+
+
+// Busca os registros com fetch e JSON, como na apostila do 4o bimestre.
+function criarTexto(elemento, texto) {
+    let novo = document.createElement(elemento);
+    novo.textContent = texto;
+    return novo;
+}
+
+// Detalhes de projetos: criados com DOM e exibidos por clique.
+function mostrarDetalhes(projetos) {
+    let lista = document.querySelector("#detalhe-projeto");
+    if (!lista) return;
+    if (projetos.length === 0) {
+        lista.appendChild(criarTexto("p", "Nenhum projeto cadastrado."));
+    }
+    for (let i = 0; i < projetos.length; i++) {
+        let projeto = projetos[i];
+        let card = document.createElement("article");
+        card.classList.add("projeto");
+        card.appendChild(criarTexto("h2", projeto.titulo));
+        let botao = criarTexto("button", "Mostrar ou ocultar detalhes");
+        botao.classList.add("botao");
+        let conteudo = document.createElement("div");
+        conteudo.classList.add("conteudo-detalhe");
+        conteudo.classList.add("oculto");
+        conteudo.appendChild(criarTexto("p", projeto.descricao));
+        conteudo.appendChild(criarTexto("h3", "Tecnologias utilizadas"));
+        conteudo.appendChild(criarTexto("p", projeto.tecnologias));
+        let link = criarTexto("a", "Ver no GitHub");
+        link.classList.add("botao");
+        link.setAttribute("href", projeto.link_git);
+        link.setAttribute("target", "_blank");
+        conteudo.appendChild(link);
+        botao.addEventListener("click", function () {
+            conteudo.classList.toggle("oculto");
+        });
+        card.appendChild(botao);
+        card.appendChild(conteudo);
+        lista.appendChild(card);
     }
 }
- 
- 
-// ----------------------------------------
-// Formulário de contato
-// ----------------------------------------
-const formContato = document.querySelector("#form-contato");
- 
-// Só roda se o formulário existir (este script também é carregado em
-// páginas que não têm o formulário, e aí nada deve acontecer)
-if (formContato) {
- 
-    // Ao abrir a página, já mostra as mensagens que existem no banco
-    carregarMensagens();
- 
-    formContato.addEventListener("submit", async function (event) {
-        // Impede o envio padrão do formulário, que recarregaria a página
-        event.preventDefault();
- 
-        // Lê o que o usuário digitou; trim() tira espaços do começo e do fim
-        const dados = {
-            nome: document.querySelector("#nome").value.trim(),
-            email: document.querySelector("#email").value.trim(),
-            texto: document.querySelector("#mensagem").value.trim(),
-        };
- 
-        // Validação simples no navegador antes de chamar o servidor
-        if (dados.nome === "") {
-            mostrarStatus("Por favor, informe seu nome.", "erro");
-            return;
+
+// Pesquisa simples usando apenas lacos, comparacoes e arrays.
+// A busca diferencia maiusculas de minusculas.
+function contemTexto(texto, termo) {
+    if (termo === "") return true;
+    for (let i = 0; i <= texto.length - termo.length; i++) {
+        let igual = true;
+        for (let j = 0; j < termo.length; j++) {
+            if (texto[i + j] !== termo[j]) igual = false;
         }
- 
-        try {
-            // Envia o POST e espera o servidor confirmar o cadastro
-            await cadastrarMensagem(dados);
- 
-            mostrarStatus("Mensagem enviada com sucesso! Obrigado pelo contato.", "ok");
-            formContato.reset(); // limpa os campos do formulário
- 
-            // Busca a lista de novo: a nova mensagem aparece sem recarregar a página
-            await carregarMensagens();
-        } catch (erro) {
-            // Qualquer falha (rede, servidor, validação) cai aqui
-            mostrarStatus("Erro: " + erro.message, "erro");
+        if (igual) return true;
+    }
+    return false;
+}
+
+function carregarProjetos() {
+    let lista = document.querySelector("#galeria-projetos");
+    let limite = 100000;
+    if (!lista) {
+        lista = document.querySelector("#projetos-destaque");
+        limite = 3;
+    }
+    let detalhe = document.querySelector("#detalhe-projeto");
+    if (!lista && !detalhe) return;
+    let status = document.querySelector("#status-projetos");
+    fetch(detalhe || (lista && lista.id == "galeria-projetos") ? "../php/api.php?tabela=projetos" : "php/api.php?tabela=projetos")
+        .then(function (resposta) { return resposta.json(); })
+        .then(function (projetos) {
+            if (detalhe) {
+                mostrarDetalhes(projetos);
+                return;
+            }
+            status.textContent = "";
+            if (projetos.length == 0) status.textContent = "Nenhum projeto cadastrado. Use o painel para adicionar.";
+            for (let i = 0; i < projetos.length && i < limite; i++) {
+                let projeto = projetos[i];
+                let card = document.createElement("article");
+                card.className = "projeto";
+                let numero = criarTexto("span", "PROJETO");
+                numero.className = "numero-projeto";
+                card.appendChild(numero);
+                card.appendChild(criarTexto("h3", projeto.titulo));
+                card.appendChild(criarTexto("p", projeto.descricao));
+                card.appendChild(criarTexto("p", projeto.tecnologias));
+                let link = criarTexto("a", "Ver no Git");
+                link.className = "botao";
+                link.href = projeto.link_git;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                let acoes = document.createElement("div");
+                acoes.className = "acoes-projeto";
+                acoes.appendChild(link);
+                let detalhes = criarTexto("a", "Ver detalhes dos projetos");
+                detalhes.className = "botao botao-secundario";
+                detalhes.setAttribute("href", lista.id == "galeria-projetos" ? "detalhes.html" : "pages/detalhes.html");
+                acoes.appendChild(detalhes);
+                card.appendChild(acoes);
+                lista.appendChild(card);
+            }
+        })
+        .catch(function () {
+            if (status) status.textContent = "Não foi possível carregar os projetos. Verifique o Apache e o MySQL.";
+            if (detalhe) detalhe.textContent = "Não foi possível carregar o projeto.";
+        });
+}
+
+function carregarMensagens() {
+    let lista = document.querySelector("#lista-mensagens");
+    if (!lista) return;
+    let status = document.querySelector("#status-mensagens");
+    fetch("../php/api.php?tabela=mensagens")
+        .then(function (resposta) { return resposta.json(); })
+        .then(function (mensagens) {
+            status.textContent = "";
+            document.querySelector("#titulo-mensagens").textContent = "Mensagens enviadas (" + mensagens.length + ")";
+            for (let i = 0; i < mensagens.length; i++) {
+                let item = document.createElement("li");
+                item.className = "mensagem-card";
+                item.appendChild(criarTexto("strong", mensagens[i].nome));
+                let email = criarTexto("span", mensagens[i].email);
+                email.className = "mensagem-email";
+                item.appendChild(email);
+                item.appendChild(criarTexto("p", mensagens[i].texto));
+                item.appendChild(criarTexto("small", mensagens[i].data_envio));
+                lista.appendChild(item);
+            }
+        })
+        .catch(function () { status.textContent = "Não foi possível carregar as mensagens. Verifique o Apache e o MySQL."; });
+}
+
+// Pesquisa local: usa os cards que ja foram carregados pelo fetch.
+let pesquisa = document.querySelector("#pesquisa-projetos");
+if (pesquisa) {
+    pesquisa.addEventListener("input", function () {
+        let termo = pesquisa.value;
+        let cards = document.querySelectorAll("#galeria-projetos .projeto");
+        for (let i = 0; i < cards.length; i++) {
+            let texto = cards[i].textContent;
+            if (contemTexto(texto, termo)) {
+                cards[i].classList.remove("oculto");
+            } else {
+                cards[i].classList.add("oculto");
+            }
         }
     });
 }
+
+carregarProjetos();
+carregarMensagens();
