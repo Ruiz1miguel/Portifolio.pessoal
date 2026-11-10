@@ -1,72 +1,127 @@
-// Painel de administração: token guardado somente nesta aba (em memória).
-let tokenAdmin = '';
-let projetosAtuais = [];
-let loginArea = document.querySelector('#login-area');
-let area = document.querySelector('#admin-area');
+// CRUD completo: CREATE, READ, UPDATE, DELETE com Fetch e DOM (apostilas DWS).
 let statusAdmin = document.querySelector('#admin-status');
-let formProjeto = document.querySelector('#form-projeto');
-function aviso(t) { statusAdmin.textContent = t; }
-function elemento(tag, texto) { let e = document.createElement(tag); e.textContent = texto == null ? '' : String(texto); return e; }
-function limparForm() { formProjeto.reset(); document.querySelector('#projeto-id').value = ''; document.querySelector('#titulo-form').textContent = 'Cadastrar projeto'; }
-function sair() { tokenAdmin = ''; area.hidden = true; loginArea.hidden = false; limparForm(); }
-function adm(caminho, metodo, dados) { return api(caminho, metodo, dados, tokenAdmin); }
-async function atualizar() {
-    projetosAtuais = await adm('/api/projetos');
-    let lista = document.querySelector('#lista-admin-projetos'); lista.textContent = '';
-    if (!projetosAtuais.length) lista.appendChild(elemento('p', 'Nenhum projeto cadastrado.'));
-    for (let projeto of projetosAtuais) {
-        let card = elemento('div', ''); card.className = 'admin-registro';
-        card.appendChild(elemento('strong', projeto.titulo));
-        card.appendChild(elemento('p', projeto.descricao));
-        let acoes = elemento('div', ''); acoes.className = 'acoes';
-        let editar = elemento('button', 'Editar'); editar.type = 'button'; editar.className = 'btn btn-editar';
-        editar.addEventListener('click', function () {
-            document.querySelector('#projeto-id').value = projeto.id;
-            document.querySelector('#titulo').value = projeto.titulo;
-            document.querySelector('#descricao').value = projeto.descricao;
-            document.querySelector('#tecnologias').value = projeto.tecnologias;
-            document.querySelector('#link-git').value = projeto.link_git || '';
-            document.querySelector('#titulo-form').textContent = 'Editar projeto';
-            formProjeto.scrollIntoView({behavior:'smooth'});
-        });
-        let excluir = elemento('button', 'Excluir'); excluir.type = 'button'; excluir.className = 'btn btn-excluir';
-        excluir.addEventListener('click', async function () {
-            if (!confirm('Excluir este projeto?')) return;
-            try { await adm('/api/projetos/' + projeto.id, 'DELETE'); aviso('Projeto excluído.'); await atualizar(); } catch (e) { aviso(e.message); }
-        });
-        acoes.appendChild(editar); acoes.appendChild(excluir); card.appendChild(acoes); lista.appendChild(card);
-    }
-    let mensagens = await adm('/api/mensagens');
-    let caixa = document.querySelector('#lista-admin-mensagens'); caixa.textContent = '';
-    if (!mensagens.length) caixa.appendChild(elemento('p', 'Nenhuma mensagem recebida.'));
-    for (let m of mensagens) {
-        let card = elemento('div', ''); card.className = 'admin-registro';
-        card.appendChild(elemento('strong', m.nome)); card.appendChild(elemento('p', m.email)); card.appendChild(elemento('p', m.texto));
-        card.appendChild(elemento('small', m.data_envio || ''));
-        let excluir = elemento('button', 'Excluir mensagem'); excluir.type = 'button'; excluir.className = 'btn btn-excluir';
-        excluir.addEventListener('click', async function () {
-            if (!confirm('Excluir esta mensagem?')) return;
-            try { await adm('/api/mensagens/' + m.id, 'DELETE'); aviso('Mensagem excluída.'); await atualizar(); } catch (e) { aviso(e.message); }
-        });
-        card.appendChild(excluir); caixa.appendChild(card);
+let formularioProjeto = document.querySelector('#form-projeto');
+let projetosAtuais = [];
+window.ADMIN_KEY = '';
+
+function mostrarStatus(texto) { statusAdmin.textContent = texto; }
+function criarElemento(tag, texto) {
+    let item = document.createElement(tag);
+    item.textContent = texto == null ? '' : String(texto);
+    return item;
+}
+
+// O painel abre diretamente, sem formulário de e-mail e senha.
+// Em produção, uma chave é solicitada apenas quando o servidor exige autorização.
+async function acaoAdmin(caminho, metodo, dados) {
+    try {
+        return await api(caminho, metodo, dados, true);
+    } catch (erro) {
+        if (erro.status !== 401) throw erro;
+        let chave = window.prompt('Para alterar dados no servidor, informe a chave administrativa:');
+        if (!chave) throw new Error('Operação cancelada.');
+        window.ADMIN_KEY = chave;
+        return await api(caminho, metodo, dados, true);
     }
 }
-document.querySelector('#form-login').addEventListener('submit', async function (evento) {
-    evento.preventDefault(); aviso('Entrando...');
+
+async function listarProjetosAdmin() {
+    let lista = document.querySelector('#lista-admin-projetos');
+    lista.textContent = '';
     try {
-        let dados = await api('/api/login', 'POST', {email:document.querySelector('#admin-email').value.trim(), senha:document.querySelector('#admin-senha').value});
-        tokenAdmin = dados.token;
-        await adm('/api/verificar');
-        loginArea.hidden = true; area.hidden = false; document.querySelector('#form-login').reset();
-        await atualizar(); aviso('Painel carregado.');
-    } catch (e) { sair(); aviso('Erro ao entrar: ' + e.message); }
-});
-formProjeto.addEventListener('submit', async function (evento) {
-    evento.preventDefault(); aviso('Salvando...');
+        projetosAtuais = await obterProjetos();
+        if (!projetosAtuais.length) lista.appendChild(criarElemento('p', 'Nenhum projeto cadastrado.'));
+        for (let projeto of projetosAtuais) {
+            let card = criarElemento('article', '');
+            card.className = 'admin-registro';
+            card.appendChild(criarElemento('h3', projeto.titulo));
+            card.appendChild(criarElemento('p', projeto.descricao));
+            card.appendChild(criarElemento('p', 'Tecnologias: ' + projeto.tecnologias));
+            let editar = criarElemento('button', 'Editar');
+            editar.type = 'button';
+            editar.addEventListener('click', function () { editarProjeto(projeto.id); });
+            let excluir = criarElemento('button', 'Excluir');
+            excluir.type = 'button';
+            excluir.addEventListener('click', function () { excluirProjeto(projeto.id); });
+            card.appendChild(editar);
+            card.appendChild(excluir);
+            lista.appendChild(card);
+        }
+        mostrarStatus('Projetos carregados.');
+    } catch (erro) { mostrarStatus('Erro ao listar projetos: ' + erro.message); }
+}
+
+function editarProjeto(id) {
+    let projeto = projetosAtuais.find(function (item) { return item.id === id; });
+    if (!projeto) return;
+    document.querySelector('#projeto-id').value = projeto.id;
+    document.querySelector('#titulo').value = projeto.titulo;
+    document.querySelector('#descricao').value = projeto.descricao;
+    document.querySelector('#tecnologias').value = projeto.tecnologias;
+    document.querySelector('#link-git').value = projeto.link_git || '';
+    document.querySelector('#titulo-form').textContent = 'Editar projeto';
+    formularioProjeto.scrollIntoView({behavior: 'smooth'});
+}
+
+function limparFormulario() {
+    formularioProjeto.reset();
+    document.querySelector('#projeto-id').value = '';
+    document.querySelector('#titulo-form').textContent = 'Cadastrar projeto';
+}
+
+document.querySelector('#cancelar').addEventListener('click', limparFormulario);
+formularioProjeto.addEventListener('submit', async function (evento) {
+    evento.preventDefault();
     let id = document.querySelector('#projeto-id').value;
-    let dados = {titulo:document.querySelector('#titulo').value.trim(), descricao:document.querySelector('#descricao').value.trim(), tecnologias:document.querySelector('#tecnologias').value.trim(), link_git:document.querySelector('#link-git').value.trim()};
-    try { await adm(id ? '/api/projetos/' + id : '/api/projetos', id ? 'PUT' : 'POST', dados); limparForm(); await atualizar(); aviso('Projeto salvo!'); }
-    catch (e) { aviso(e.message); }
+    let dados = {
+        titulo: document.querySelector('#titulo').value.trim(),
+        descricao: document.querySelector('#descricao').value.trim(),
+        tecnologias: document.querySelector('#tecnologias').value.trim(),
+        link_git: document.querySelector('#link-git').value.trim()
+    };
+    try {
+        await acaoAdmin(id ? '/api/projetos/' + id : '/api/projetos', id ? 'PUT' : 'POST', dados);
+        limparFormulario();
+        await listarProjetosAdmin();
+        mostrarStatus(id ? 'Projeto atualizado!' : 'Projeto cadastrado!');
+    } catch (erro) { mostrarStatus('Não foi possível salvar: ' + erro.message); }
 });
-document.querySelector('#cancelar').addEventListener('click', limparForm);
-document.querySelector('#sair').addEventListener('click', function () { sair(); aviso('Você saiu do painel.'); });
+
+async function excluirProjeto(id) {
+    if (!window.confirm('Deseja realmente excluir este projeto?')) return;
+    try {
+        await acaoAdmin('/api/projetos/' + id, 'DELETE');
+        await listarProjetosAdmin();
+        mostrarStatus('Projeto excluído!');
+    } catch (erro) { mostrarStatus('Erro ao excluir: ' + erro.message); }
+}
+
+async function listarMensagens() {
+    let lista = document.querySelector('#lista-admin-mensagens');
+    lista.textContent = '';
+    try {
+        let mensagens = await acaoAdmin('/api/mensagens', 'GET');
+        if (!mensagens.length) lista.appendChild(criarElemento('p', 'Nenhuma mensagem recebida.'));
+        for (let mensagem of mensagens) {
+            let card = criarElemento('article', '');
+            card.className = 'admin-registro';
+            card.appendChild(criarElemento('h3', mensagem.nome));
+            card.appendChild(criarElemento('p', mensagem.email));
+            card.appendChild(criarElemento('p', mensagem.texto));
+            let excluir = criarElemento('button', 'Excluir mensagem');
+            excluir.type = 'button';
+            excluir.addEventListener('click', async function () {
+                if (!window.confirm('Excluir esta mensagem?')) return;
+                try {
+                    await acaoAdmin('/api/mensagens/' + mensagem.id, 'DELETE');
+                    await listarMensagens();
+                } catch (erro) { mostrarStatus(erro.message); }
+            });
+            card.appendChild(excluir);
+            lista.appendChild(card);
+        }
+    } catch (erro) { mostrarStatus('Erro ao consultar mensagens: ' + erro.message); }
+}
+
+document.querySelector('#carregar-mensagens').addEventListener('click', listarMensagens);
+listarProjetosAdmin();

@@ -1,4 +1,4 @@
-// Versão GitHub Pages: galeria dinâmica no Supabase.
+// Versão GitHub Pages: galeria dinâmica via API Python Flask e MySQL.
 let botoesPerguntas = document.querySelectorAll('.pergunta-botao');
 let respostas = document.querySelectorAll('.resposta');
 for (let i = 0; i < botoesPerguntas.length; i++) {

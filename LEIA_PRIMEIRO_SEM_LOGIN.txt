@@ -1,0 +1,7 @@
+PAINEL SEM LOGIN
+
+A pagina pages/admin.html abre diretamente e mostra os projetos publicos.
+Por seguranca, cadastro/edicao/exclusao e leitura de mensagens privadas nao foram liberados sem autenticacao.
+O backend Flask e o banco MySQL foram mantidos sem alteracoes.
+Para carregar projetos reais, configure js/config.js com a URL HTTPS do Flask e ALLOWED_ORIGINS no servidor.
+Para um CRUD completo sem formulario de senha, e necessario outro mecanismo de autorizacao no servidor (por exemplo, login com provedor externo).
