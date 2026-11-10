@@ -1,3 +1,4 @@
+
 PORTFÓLIO DWS - HTML + CSS + JAVASCRIPT + PYTHON FLASK + MYSQL
 
 1) O GitHub Pages hospeda apenas o FRONTEND. Ele NÃO executa Flask nem MySQL.

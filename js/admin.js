@@ -1,3 +1,4 @@
+
 // CRUD completo: CREATE, READ, UPDATE, DELETE com Fetch e DOM (apostilas DWS).
 let statusAdmin = document.querySelector('#admin-status');
 let formularioProjeto = document.querySelector('#form-projeto');
