@@ -79,7 +79,7 @@ function carregarProjetos() {
     let detalhe = document.querySelector("#detalhe-projeto");
     if (!lista && !detalhe) return;
     let status = document.querySelector("#status-projetos");
-    fetch(detalhe || (lista && lista.id == "galeria-projetos") ? "/api/projetos" : "/api/projetos")
+    fetch(detalhe || (lista && lista.id == "galeria-projetos") ? "../php/api.php?tabela=projetos" : "php/api.php?tabela=projetos")
         .then(function (resposta) { return resposta.json(); })
         .then(function (projetos) {
             if (detalhe) {
@@ -115,9 +115,33 @@ function carregarProjetos() {
             }
         })
         .catch(function () {
-            if (status) status.textContent = "Não foi possível carregar os projetos. Verifique a conexão com o servidor.";
+            if (status) status.textContent = "Não foi possível carregar os projetos. Verifique o Apache e o MySQL.";
             if (detalhe) detalhe.textContent = "Não foi possível carregar o projeto.";
         });
+}
+
+function carregarMensagens() {
+    let lista = document.querySelector("#lista-mensagens");
+    if (!lista) return;
+    let status = document.querySelector("#status-mensagens");
+    fetch("../php/api.php?tabela=mensagens")
+        .then(function (resposta) { return resposta.json(); })
+        .then(function (mensagens) {
+            status.textContent = "";
+            document.querySelector("#titulo-mensagens").textContent = "Mensagens enviadas (" + mensagens.length + ")";
+            for (let i = 0; i < mensagens.length; i++) {
+                let item = document.createElement("li");
+                item.className = "mensagem-card";
+                item.appendChild(criarTexto("strong", mensagens[i].nome));
+                let email = criarTexto("span", mensagens[i].email);
+                email.className = "mensagem-email";
+                item.appendChild(email);
+                item.appendChild(criarTexto("p", mensagens[i].texto));
+                item.appendChild(criarTexto("small", mensagens[i].data_envio));
+                lista.appendChild(item);
+            }
+        })
+        .catch(function () { status.textContent = "Não foi possível carregar as mensagens. Verifique o Apache e o MySQL."; });
 }
 
 // Pesquisa local: usa os cards que ja foram carregados pelo fetch.
@@ -138,4 +162,4 @@ if (pesquisa) {
 }
 
 carregarProjetos();
-
+carregarMensagens();
