@@ -1,7 +1,7 @@
 <?php
 // Conexao PDO como na apostila do 3o bimestre.
 // Antes de usar, importe banco.sql pelo phpMyAdmin.
-$conexao = new PDO("mysql:host=localhost;dbname=portifolio_pessoal;charset=utf8mb4", "root", "");
+$conexao = new PDO("mysql:host=localhost;dbname=portifolio_pessoal;charset=utf8mb4", "root", "root");
 $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Somente duas tabelas conhecidas; nunca usar diretamente um nome enviado pelo usuario.
